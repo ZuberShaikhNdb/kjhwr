@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    ports: ["8000:8000"]
+    # Uncomment to run with synthetic data (offline):
+    # environment: { DEMO_MODE: "1" }
