@@ -1,6 +1,18 @@
 {
-  "buildCommand": "cd frontend && npm install && npm run build",
-  "outputDirectory": "frontend/dist",
-  "functions": { "api/index.py": { "includeFiles": "data/**", "maxDuration": 30 } },
-  "rewrites": [{ "source": "/api/(.*)", "destination": "/api/index" }]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "app": {
+      "root": ".",
+      "framework": "fastapi",
+      "entrypoint": "api/index.py"
+    },
+    "frontend": {
+      "root": "frontend",
+      "framework": "vite"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": { "service": "app" } },
+    { "source": "/(.*)", "destination": { "service": "frontend" } }
+  ]
 }

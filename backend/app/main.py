@@ -1,11 +1,12 @@
 """FastAPI application: JSON API under /api + serves the built React app (if present)."""
 from __future__ import annotations
 
+import os
 from datetime import date, timedelta
 
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -15,6 +16,15 @@ from .data import get_data
 
 app = FastAPI(title="Wind Forecast Monitor", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET"], allow_headers=["*"])
+
+
+@app.middleware("http")
+async def ensure_api_prefix(request: Request, call_next):
+    # On Vercel the /api prefix may be stripped before reaching FastAPI; restore it.
+    p = request.scope["path"]
+    if os.getenv("VERCEL") and not p.startswith("/api"):
+        request.scope["path"] = "/api" + p
+    return await call_next(request)
 
 
 def _load():
