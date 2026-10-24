@@ -8,10 +8,7 @@ Web app for a GB energy utility's day-ahead desk. It answers two questions using
 
 **Stack:** React (Vite + Recharts) · Python **FastAPI** + pandas · Docker · Vercel / Heroku.
 
-> **AI disclosure:** this project was built with the assistance of Claude (Anthropic) for code generation and design.
-> All logic was reviewed and covered by unit tests.
-
-**Live app:** `<PASTE VERCEL/HEROKU URL HERE>`
+**Live app:** https://kjhwr-haxq.vercel.app
 
 ## Key idea: the "decision forecast"
 For delivery date **D**, power is bought on **D-1** before a deadline (default **09:30 UK time**, selectable in the UI).
